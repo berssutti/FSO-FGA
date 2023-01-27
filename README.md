@@ -10,5 +10,5 @@ Repositório destinado à metéria de fundamentos de sistemas orperacionais
  
 ### Resumos
 
-* [Remumo para a P2]()
+* [Resumo para a P2]()
 * [Resumo para a P3]()
