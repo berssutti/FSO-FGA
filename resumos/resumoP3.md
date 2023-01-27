@@ -1,28 +1,26 @@
-	ESTRUTURA DE ARMAZENAMENTO EM MASSA
+# ESTRUTURA DE ARMAZENAMENTO EM MASSA
 
 Grande parte dos dispositivos de armazenamento secundário é composta por: 
-=> Discos magnéticos
+* Discos magnéticos
 	 A velocidade do disco tem duas partes. A taxa de transferência, que é a taxa de fluxo de dados entre o drive e o computador. O tempo de posicionamento(random-access time), que consistem, também em duas partes: (1) O tempo necessário para acessar o cilindro do setor desejado(seek time); (2) O tempo necessário para o setor desejado rotacionar até a cabeça do disco(rotational latency).
 
-=> Discos de estado sólido 
+* Discos de estado sólido 
 	Podem ser mais confiáveis e rápidos que HDs, pois não tempo partes móveis nem seek time e rotational latency. Além de que consomem menos energia. No entanto, possuem um preço mais alto por MB.  	
 		
-=> Fitas magnéticas 
+* Fitas magnéticas 
 	São relativamente permanentes e podem armazenar grandes quantidades de dados, no entanto o tempo de acesso é menor que o do HD(em cerca de 1000x). Portanto, não são muito úteis como armazenamento secundário.
 
 Os drives de disco modernos são estruturados como grandes arrays unidimensionais de blocos de disco lógicos, que são mapeados pelo SO começando no setor 0 da primeira trilha no cilindro mais externo, depois o procedimento se repete através das trilhas do cilindro, depois pelo resto dos cilindros, do mais externo para o mais interno. Os discos podem ser anexados a um sistema de computação de duas maneiras:
-(1) através das portas de I/O locais no computador hospedeiro ou 
-(2) por meio de uma conexão de rede.
+1. através das portas de I/O locais no computador hospedeiro ou 
+2. por meio de uma conexão de rede.
 
 As solicitações de I/O de disco são geradas pelo SO, processos de sistema ou processos de usuário. Cada solicitação especifica o endereço a ser referênciado no disco, número de setores a senrem transfiridos, endereço de memória. Os algoritmos de scheduling de disco podem melhorar a largura de banda efetiva, o tempo de resposta médio e a variância no tempo de resposta(minimizar o seek time). Algoritmos: 
-=> SSTF
-	É comum e tem uma abordagem natural. Escolha boa para algoritmo padrão
-=> SCAN 
-	Produz menos starvation
-=> C-SCAN
-=> LOOK 
-	Escolha boa para algoritmo padrão
-=> C-LOOK
+* SSTF -> É comum e tem uma abordagem natural. Escolha boa para algoritmo padrão
+* SCAN -> Produz menos starvation
+* C-SCAN
+* LOOK -> Escolha boa para algoritmo padrão
+* C-LOOK
+
 Esses algoritmos foram projetados para implementar essas melhorias por meio de estratégias de ordenação das filas de disco. O desempenho dos algoritmos de scheduling de disco pode variar muito em discos magnéticos. Por outro lado, já que os discos de estado sólido não têm partes móveis, o desempenho varia pouco entre os algoritmos, e com muita frequência uma simples estratégia FCFS é utilizada.
 
 O desempenho pode ser prejudicado pela fragmentação externa. Alguns sistemas têm utilitários que varrem o sistema de arquivos para identificar arquivos fragmentados; em seguida, eles mudam blocos de
@@ -37,34 +35,34 @@ Nível 0+1 e 1+0: o 0+1 refere-se a uma combinação dos níveis 0 e 1. O nível
 
 Diferenças entre 0+1 e 1+0: Se um disco falha no RAID 0+1, uma distribuição inteira fica inacessível, deixando apenas a outra distribuição disponível Se um disco no RAID 1+0, apenas um disco fica indisponível, mas o disco que o espelha continua disponível, assim como os outros discos.
 
-	INTERFACE DO SISTEMA DE ARQUIVOS
+# INTERFACE DO SISTEMA DE ARQUIVOS
 
 Um arquivo é um tipo de dado abstrato definido e implementado pelo SO. É uma sequência de registros lógicos. Um registro lógico podem representar programas e dados. Os arquivos de dados podem ser numéricos, alfabéticos, alfanuméricos ou binários. De modo geral, é um sequência de bits, bytes, linhas ou registros, cujo significado é definido pelo usuário do arquivo.
 Arquivos podem ter estruruas diferentes e os tipos de arquivo podem ser usados para indicar essa estrutura. Com isso o SO consegue ler o arquivo da forma desejada, no entanto isso pode tornar o SO muito pesado, pois precisa conter código para dar suporte ao diferentes tipo de estrutura de arquivo. Um arquivo pode ser considerado uma sequencia de blocos. Todas as funões básicas de I/O operam em termos de bloco, pois é dificil para o SO localizar um deslocamento dentro de um arquivo.
 
 Arquivos podem ter atributos(mantidos na estrutura de diretório) como:
-=> Nome
-=> Identificador
-=> Tipo
-=> Localização
-=> Tamanho
-=> Proteção
-=> Hora, data, etc
+* Nome
+* Identificador
+* Tipo
+* Localização
+* Tamanho
+* Proteção
+* Hora, data, etc
 
 Para abrir um aquivo(open file) é necessário uma tabela de open-file que mapeai arquivos abertos, um apontador de arquivos, um contador de arquivos abertos, localização no disco e direitos de acesso.
 Um arquivo pode ter locks similiares a locks de escrita-leitura.
-=> Shared lock: diversos processos podem adquirir concorrentemente
-=> Exclusive lock: apenas um processo por vez pode adquirir esse lock  
+* Shared lock: diversos processos podem adquirir concorrentemente
+* Exclusive lock: apenas um processo por vez pode adquirir esse lock  
 
-=> Trancamento obrigatório: o sistema operacional assegura a integridade do trancamento.
-=> Trancamento aconselhavel:é responsabilidade dos desenvolvedores do software assegurar que os locks sejam apropriadamente adquiridos e liberados. Caso
+* Trancamento obrigatório: o sistema operacional assegura a integridade do trancamento.
+* Trancamento aconselhavel:é responsabilidade dos desenvolvedores do software assegurar que os locks sejam apropriadamente adquiridos e liberados. Caso
 contrário, eles impedirão que outros processos também o acessem.
 
 A principal tarefa do SO é mapear o conceito de arquivo lógico para dispositivos de armazenamento físicos como as fitas ou discos magnéticos. Já que o tamanho do registro físico do dispositivo pode não ser igual ao tamanho do registro lógico, é necessário ordenar os registros lógicos nos registros físicos. Novamente, esse tarefa pode ser suportada pelo SO, ou pode ser deixada para o programa de aplicação.
 
 Métodos de acesso ás informações de arquivos:
-=> Acesso sequencial: informações são processadas em ordem, um registro após o outro.
-=> Acesso direto: os arquivos são compostos por registros lógicos de tamanho fixo que permitem que os programas leiam e gravem registros rapidamente sem uma ordem específica.(função hash)
+* Acesso sequencial: informações são processadas em ordem, um registro após o outro.
+* Acesso direto: os arquivos são compostos por registros lógicos de tamanho fixo que permitem que os programas leiam e gravem registros rapidamente sem uma ordem específica.(função hash)
 
 Cada dispositivo em um sistema de arquivos mantém um índice de volumes ou um diretório de dispositivos que lista a locação dos arquivos no dispositivo. Além disso, é util criar diretórios para permitir a organização dos arquivos. Um diretório de um nível em sistema multiusuário causa problemas de nomeação, já que cada arquivo deve ter um nome exclusivo. Um diretório de dois níveis resolve esse problema criando um diretório separado para os arquivos de cada usuário. O diretório lista os arquivos por nome e inclui a locação do arquivo no disco, seu tamanho, tipo, proprietário, a hora de criação, a hora em que foi usado pela última vez, e assim por diante.
 
@@ -75,10 +73,10 @@ Os discos são segmentados em um ou mais volumes, cada um contendo um sistema de
 O compartilhamento de arquivos depende das semânticas fornecidas pelo sistema. Os arquivos podem ter múltiplos leitores, múltiplos gravadores, ou limites para o compartilhamento. Os sistemas de arquivos distribuídos permitem que hospedeiros clientes montem volumes ou diretórios a partir de servidores, contanto que possam acessar um ao outro por uma rede. Os sistemas de arquivos remotos apresentam desafios quanto à confiabilidade, ao desempenho e à segurança. Os sistemas de informação distribuídos mantêm informações de usuário, hospedeiro e acesso, de modo que clientes e servidores possam compartilhar informações de estado para gerenciar o uso e o acesso.
 
 Como os arquivos são o principal mecanismo de armazenamento de informações na maioria dos sistemas de computação, faz-se necessária a proteção de arquivos. O acesso a arquivos pode ser controlado separadamente para cada tipo de acesso — leitura, gravação, execução, acréscimo, exclusão, listagem de diretório, e assim por diante. A proteção de arquivos pode ser fornecida por listas de controle de acesso, especificando nomes de usuários e os tipos de acesso permitidos a cada usuário. Para condensar a lista de acesso, o SO reconhece três classificações:
-=> Modos de acesso: leitura, gravação, execução.
-=> Classes de acesso: Proprietário(usuário que criou o arquivo), Grupo(conjunto de usuários), Universo(todos os usuários no sistema).
+* Modos de acesso: leitura, gravação, execução.
+* Classes de acesso: Proprietário(usuário que criou o arquivo), Grupo(conjunto de usuários), Universo(todos os usuários no sistema).
 
-	SISTEMAS DE I/O
+# SISTEMAS DE I/O
 
 Os elementos básicos de hardware envolvidos no I/O são buses, controladores de dispositivos e os próprios dispositivos. O trabalho de movimentar dados entre dispositivos e a memória principal é executado pela CPU como I/O programado ou é descarregado para um controlador de DMA. O módulo do kernel que controla um dispositivo é um driver de dispositivo. A interface de chamadas de sistema fornecida para aplicações é projetada para manipular várias categorias básicas de hardware, incluindo dispositivos de blocos, dispositivos de caracteres, arquivos mapeados para a memória, sockets de rede e timers de intervalos programados. As chamadas de sistema usualmente bloqueiam os processos que as emitem, mas chamadas sem bloqueio e assíncronas são usadas pelo próprio kernel e por aplicações que não devem ser suspensas enquanto esperam que uma operação de I/O seja concluída.
 
