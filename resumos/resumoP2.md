@@ -61,8 +61,8 @@ Os processos pai podem terminar a execução de processos filhos usando a chamad
 Um processo pai pode esperar pelo termino de um processo filho a partir da chamada de sistema wait. A chamada retorna a informação de estatus e o pid(process id) do processo terminado. Se o processo não pai está esperando (ou seja, não chamou o wait()), então o processo se torna um zumbie. Se o processo pai terminou sem "invocar" o wait(), então o processo se torna orfão
 
 Para processos se comunicarem existem dois métodos:
-* Shared memory(memória compartilhada) (caiu na prova)
-* Message passing(passgem de mensagem) (caiu na prova)
+* Shared memory(memória compartilhada) **(caiu na prova)**
+* Message passing(passgem de mensagem) **(caiu na prova)**
 
 Shared memory:
 Uma área da memória que é compartilhada entre processos que querem se comunicar. Essa comunicação é controlada pelos processos de usuário e não pelo sistema operacional.
@@ -72,9 +72,11 @@ Para que a comunicação ocorra sem a necessidade de depender em variáveis comp
 1. Física: memória compartilhada / rede / barramento
 2. Lógica: Direta ou indireta/ sincrona ou assincrona / automatica ou explicit buffering 
 
-Pode ocorrer de dois ou mais processos estarem esperando indefinidamente por um evento que só pode ser causado por um dos processo que está em espera, isso é chamado de DEADLOCK. (caiu na prova)
-Quando um processo fica indefinidamente na fila de bloqueados do semaforo, esse evento é chamado de STARVATION. (caiu na prova)
-No evento de um processo de baixa prioridade impedir a execução de um processo de alta prioridade, esse problema de escalonamento é chamado de PRIORITY INVERSION. (caiu na prova)
+Pode ocorrer de dois ou mais processos estarem esperando indefinidamente por um evento que só pode ser causado por um dos processo que está em espera, isso é chamado de DEADLOCK. **(caiu na prova)**
+
+Quando um processo fica indefinidamente na fila de bloqueados do semaforo, esse evento é chamado de STARVATION. **(caiu na prova)**
+
+No evento de um processo de baixa prioridade impedir a execução de um processo de alta prioridade, esse problema de escalonamento é chamado de PRIORITY INVERSION. **(caiu na prova)**
  
 # THREADS
 	
@@ -119,7 +121,7 @@ Critérios para escalonamento:
 * Waiting time (objetivo do algoritmo: min)
 * Response time (objetivo do algoritmo: min)
 
-Algoritmos de escalonamento(caiu na prova):
+Algoritmos de escalonamento **(caiu na prova)**:
 * First Come, First Served
 * Shortes-Job-First
 * Length of Next CPU Burst
