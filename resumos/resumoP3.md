@@ -1,19 +1,15 @@
 # ESTRUTURA DE ARMAZENAMENTO EM MASSA
 
 Grande parte dos dispositivos de armazenamento secundário é composta por: 
-* Discos magnéticos:
-	
+* Discos magnéticos
 	A velocidade do disco tem duas partes: 
-  1. A taxa de transferência: taxa de fluxo de dados entre o drive e o computador
-  2. O tempo de posicionamento(random-access time), que consiste emduas partes: 
-     1. O tempo necessário para acessar o cilindro do setor desejado(seek time) 
-     2. O tempo necessário para o setor desejado rotacionar até a cabeça do disco(rotational latency).
-* Discos de estado sólido: 
-	
+	1. A taxa de transferência: taxa de fluxo de dados entre o drive e o computador
+	2. O tempo de posicionamento(random-access time): consiste emduas partes: (1) O tempo necessário para acessar o cilindro do setor desejado(seek time); (2) O tempo necessário para o setor desejado rotacionar até a cabeça do disco(rotational latency).
+
+* Discos de estado sólido 
 	Podem ser mais confiáveis e rápidos que HDs, pois não tempo partes móveis nem seek time e rotational latency. Além de que consomem menos energia. No entanto, possuem um preço mais alto por MB.  	
 		
-* Fitas magnéticas:
-	
+* Fitas magnéticas 
 	São relativamente permanentes e podem armazenar grandes quantidades de dados, no entanto o tempo de acesso é menor que o do HD(em cerca de 1000x). Portanto, não são muito úteis como armazenamento secundário.
 
 Os drives de disco modernos são estruturados como grandes arrays unidimensionais de blocos de disco lógicos, que são mapeados pelo SO começando no setor 0 da primeira trilha no cilindro mais externo, depois o procedimento se repete através das trilhas do cilindro, depois pelo resto dos cilindros, do mais externo para o mais interno. Os discos podem ser anexados a um sistema de computação de duas maneiras:
@@ -50,7 +46,7 @@ Diferenças entre 0+1 e 1+0: Se um disco falha no RAID 0+1, uma distribuição i
 
 Um arquivo é uma sequência de registros lógicos. Um registro lógico pode representar programas e dados. 
 * Arquivos de dados: numéricos, alfabéticos, alfanuméricos ou binários. 
-De modo geral, é um sequência de bits, bytes, linhas ou registros, cujo significado é definido pelo usuário do arquivo. Arquivos podem ter estrutuas diferentes e os tipos de arquivos podem ser usados para indicar essa estrutura. Com isso o SO consegue ler o arquivo da forma desejada, no entanto isso pode tornar o SO muito pesado, pois precisa conter código para dar suporte ao diferentes tipo de estrutura de arquivo. Um arquivo pode ser considerado uma sequencia de blocos. Todas as funções básicas de I/O operam em termos de bloco, pois é dificil para o SO localizar um deslocamento dentro de um arquivo.
+De modo geral, é uma sequência de bits, bytes, linhas ou registros, cujo significado é definido pelo usuário do arquivo. Arquivos podem ter estrutuas diferentes e os tipos de arquivos podem ser usados para indicar essa estrutura. Com isso o SO consegue ler o arquivo da forma desejada, no entanto isso pode tornar o SO muito pesado, pois precisa conter código para dar suporte ao diferentes tipo de estrutura de arquivo. Um arquivo pode ser considerado uma sequencia de blocos. Todas as funções básicas de I/O operam em termos de bloco, pois é dificil para o SO localizar um deslocamento dentro de um arquivo.
 
 Arquivos podem ter atributos(mantidos na estrutura de diretório) como:
 * Nome
@@ -78,7 +74,7 @@ contrário, eles impedirão que outros processos também o acessem
 
 A principal tarefa do SO é mapear o conceito de arquivo lógico para dispositivos de armazenamento físicos como as fitas ou discos magnéticos. Já que o tamanho do registro físico do dispositivo pode não ser igual ao tamanho do registro lógico, é necessário ordenar os registros lógicos nos registros físicos. Novamente, esse tarefa pode ser suportada pelo SO, ou pode ser deixada para o programa de aplicação.
 
-Métodos de acesso ás informações de arquivos:
+Métodos de acesso às informações de arquivos:
 * Acesso sequencial: informações são processadas em ordem, um registro após o outro.
 * Acesso direto: os arquivos são compostos por registros lógicos de tamanho fixo que permitem que os programas leiam e gravem registros rapidamente sem uma ordem específica.(função hash)
 
@@ -115,6 +111,7 @@ Além disso cada dispositivo possui endereço que é usado para instruções de 
 Tipos de entradas e saídas:
 
 Sondagem (Polling)
+
 É a interação entre controlador e hospedeiro que é feita atraveś do bit *busy*, quando o bit é 1 o controlador está ocupado, quando é 0 o controlador está pronto para aceitar o próximo comando.
 1. Hospedeiro lê repetidamente o bit *busy* até que ele seja desligado
 2. Hospedeiro liga o bit *write* no registrador *command* e grava um byte no registrador *data-out*
@@ -124,29 +121,55 @@ Sondagem (Polling)
 5. Controlador disliga o bit *command-ready*, desliga o bit *error* no registrador *status* para indicar que o I/O do dispositivo foi bem-sucedido, e desliga o bit *busy* para indicar que terminou
 
 Interrupção
-É o mecanismo de hardware que habilita um dispositivo para notificar a CPU. A CPU tem uma linha de solicitação de interrupção, quando a CPU detecta que um controlador confimou um sinal na linha de solicitação de interrupção, ela executa um salvamento de estado e salta para a rotina de manipulação de interrupções em um endereço fixo na memória. Depois realiza uma restauração de estado e executa uma instrução para retornar a CPU ao estado de execução anterior à interrupção.
+
+É o mecanismo de hardware que habilita um dispositivo para notificar a CPU. A CPU tem uma linha de solicitação de
+interrupção, quando a CPU detecta que um controlador confimou um sinal na linha de solicitação de interrupção, ela
+executa um salvamento de estado e salta para a rotina de manipulação de interrupções em um endereço fixo na memória.
+Depois realiza uma restauração de estado e executa uma instrução para retornar a CPU ao estado de execução anterior 
+à interrupção.
 
 * Interrupção não mascarável: reservada para eventos tais como erros de memória irrecuperáveis
-* Interrupção mascarável: pode ser desativada pela CPU antes da execução de sequencias de intruções criticas que não devem ser interrompidas.
+* Interrupção mascarável: pode ser desativada pela CPU antes da execução de sequencias de intruções criticas que não
+devem ser interrompidas.
 
-O mecanismo de interrupção também é usado para tratar *exeception* -> termina processos, "chasha" sistemas por conta de erros de hardware. Em sistemas multi-CPU as interrupções podem ser tratadas concorrentemente.
+O mecanismo de interrupção também é usado para tratar *exeception* -> termina processos, "chasha" sistemas por conta
+de erros de hardware. Em sistemas multi-CPU as interrupções podem ser tratadas concorrentemente.
 
 Acesso direto à Memória (importante)
-É usado para evitar I/O programado (um byte por vez) para grandes quantidades de dados. Para que isso seja possível é necessário um controlador de DMA que ignora a CPU para transferir dado diretametente entre dispositivo I/O e memória.
 
-O hospedeiro grava um bloco de comando DMA na memória. Esse bloco contém um ponteiro para a origem da transferência, um ponteiro para o destino da transferência, e uma contagem de número de bytes a serem transferidos. A CPU grava o endereço desse bloco de comando no controlador de DMA e, então, continua com outra tarefa. O controlador DMA passa a operar o bus da memória diretamente, inserindo endereços no bus para executar transferências sem a ajuda da CPU principal.
+É usado para evitar I/O programado (um byte por vez) para grandes quantidades de dados. Para que isso seja possível
+é necessário um controlador de DMA que ignora a CPU para transferir dado diretametente entre dispositivo I/O e memória.
 
-A interface de chamadas de sistema fornecida para aplicações é projetada para manipular várias categorias básicas de hardware, como:
+O hospedeiro grava um bloco de comando DMA na memória. Esse bloco contém um ponteiro para a origem da transferência,
+um ponteiro para o destino da transferência, e uma contagem de número de bytes a serem transferidos. A CPU grava o
+endereço desse bloco de comando no controlador de DMA e, então, continua com outra tarefa. O controlador DMA passa a
+operar o bus da memória diretamente, inserindo endereços no bus para executar transferências sem a ajuda da CPU
+principal.
+
+A interface de chamadas de sistema fornecida para aplicações é projetada para manipular várias categorias
+básicas de hardware, como:
 * Dispositivos de blocos
 * Dispositivos de caracteres
 * Arquivos mapeados para a memória
 * Sockets de rede e timers de intervalos programados 
 
-As chamadas de sistema encapsulam comportamentos de dispositivos em classes gerais. As camadas de driver de dispositivo escondem diferenças entre controladores de I/O e kernel. As chamadas usualmente bloqueiam os processos que as emitem (drives de disco e dispositivos de caracteres), ou seja, suspendem o processo até completar o I/O, chamadas sem bloqueio retornam no momento que estão disponíveis e as chamadas assíncronas processam enquanto o I/O executa. As chamadas de bloqueio e assíncronas são usadas pelo próprio kernel e por aplicações que não devem ser suspensas enquanto esperam que uma operação de I/O seja concluída.
+As chamadas de sistema encapsulam comportamentos de dispositivos em classes gerais. As camadas de driver de
+dispositivo escondem diferenças entre controladores de I/O e kernel. As chamadas usualmente bloqueiam os processos que
+as emitem (drives de disco e dispositivos de caracteres), ou seja, suspendem o processo até completar o I/O, chamadas
+sem bloqueio retornam no momento que estão disponíveis e as chamadas assíncronas processam enquanto o I/O executa.
+As chamadas de bloqueio e assíncronas são usadas pelo próprio kernel e por aplicações que não devem ser suspensas
+enquanto esperam que uma operação de I/O seja concluída.
 
-Alguns SO também oferecem I/O vetorizado que permite que uma única chamada de sistema execute múltiplas operações de I/O envolvendo múltiplas locações.
+Alguns SO também oferecem I/O vetorizado que permite que uma única chamada de sistema execute múltiplas operações
+de I/O envolvendo múltiplas locações.
 
-O subsistema de I/O do kernel fornece numerosos serviços. Entre eles estão o scheduling de I/O, o armazenamento em buffer, o armazenamento em cache, o spooling, a reserva de dispositivos e a manipulação de erros. Outro serviço, a tradução de nomes, faz a conexão entre dispositivos de hardware e nomes de arquivo simbólicos usados pelas aplicações. Ele envolve vários níveis de mapeamento que traduzem nomes formados por cadeias de caracteres para drivers de dispositivos e endereços de dispositivos específicos e, então, para endereços físicos de portas de I/O ou controladores de bus. Esse mapeamento pode ocorrer dentro do espaço de nomes do sistema de arquivos ou em um espaço de nomes de dispositivos separado
+O subsistema de I/O do kernel fornece numerosos serviços. Entre eles estão o scheduling de I/O, o armazenamento em 
+buffer, o armazenamento em cache, o spooling, a reserva de dispositivos e a manipulação de erros. Outro serviço,
+a tradução de nomes, faz a conexão entre dispositivos de hardware e nomes de arquivo simbólicos usados pelas aplicações.
+Ele envolve vários níveis de mapeamento que traduzem nomes formados por cadeias de caracteres para drivers de
+dispositivos e endereços de dispositivos específicos e, então, para endereços físicos de portas de I/O ou controladores
+de bus. Esse mapeamento pode ocorrer dentro do espaço de nomes do sistema de arquivos ou em um espaço de nomes de
+dispositivos separado.
 
 Transformando Solicitações de I/O em Operações de Hardware(importante)
 1. Processo emite um read() com bloqueio para o descritor de um arquivo que foi aberto previamente
@@ -160,19 +183,131 @@ Transformando Solicitações de I/O em Operações de Hardware(importante)
 9. O kernel transfere os dados ou retorna códigos para o espaço de endereçamento do processo solicitante e transfere o processo da fila de espera de volta para a fila de prontos
 10. A transferência do processo para a fila de prontos o desbloqueia. Quando o scheduler atribui o processo à CPU, ele rotoma a sua execução quando se completa a chamada de sistema
 
-O STREAMS é uma implementação e uma metodologia que fornece uma base estrutural para a programação de drivers de dispositivos e protocolos de rede usando abordagem modular e incremental. Por meio de fluxos (streams), drivers podem ser empilhados, com dados passando por eles para processamento, de maneira sequencial e bidirecional.
+O STREAMS é uma implementação e uma metodologia que fornece uma base estrutural para a programação de drivers de 
+dispositivos e protocolos de rede usando abordagem modular e incremental. Por meio de fluxos (streams), drivers
+podem ser empilhados, com dados passando por eles para processamento, de maneira sequencial e bidirecional.
 
-As chamadas de sistema de I/O são caras em termos de consumo da CPU por causa das muitas camadas de software existentes entre um dispositivo físico e uma aplicação. Essas camadas geram overhead proveniente de várias fontes: mudanças de contexto para atravessar o limite de proteção do kernel, manipulação de sinais e de interrupções para servir os dispositivos de I/O, e a carga sobre a CPU e o sistema de memória para copiar dados entre os buffers do kernel e o espaço da aplicação.
+As chamadas de sistema de I/O são caras em termos de consumo da CPU por causa das muitas camadas de software
+existentes entre um dispositivo físico e uma aplicação. Essas camadas geram overhead proveniente de várias fontes:
+mudanças de contexto para atravessar o limite de proteção do kernel, manipulação de sinais e de interrupções
+para servir os dispositivos de I/O, e a carga sobre a CPU e o sistema de memória para copiar dados entre os
+buffers do kernel e o espaço da aplicação.
 
 
 # PROTEÇÃO
-	
+
+Os sistemas de computação contêm objetos que precisam ser protegidos contra a má utilização. 
+Os objetos podem ser de:
+* Hardware: memória, tempo de CPU e dispositivo de I/O
+* Software: arquivos, programas e semáforos.
+
+Direito de acesso é a permissão para executar uma operação sobre um objeto. Domínio 
+é um conjunto de direitos de acesso. 
+
+Os processos são executados em domínios e podem usar qualquer um dos
+direitos de acesso do domínio para acessar e manipular objetos. Um processo pode 
+ficar limitado a um domínio de proteção ou ter permissões para permutar de um domínio para outro.
+
+A matriz de acesso é um modelo geral de proteção que fornece um mecanismo de proteção sem impor uma política de
+proteção específica ao sistema ou aos seus usuários.
+
+A matriz de acesso é, normalmente, implementada como listas de acesso associadas a cada objeto,
+ou como listas de competências associadas a cada domínio. Podem incluir a proteção dinâmica no modelo de matriz
+de acesso considerando os domínios e a própria matriz de acesso como objetos. A revogação de direitos de acesso
+em um modelo de proteção dinâmica costuma ser mais fácil de implementar com um esquema de lista de acesso do que 
+com uma lista de competências.
+
+Os sistemas reais tendem a fornecer proteção apenas para arquivo. O UNIX é representativo, fornecendo proteção
+de leitura, gravação e execução separadamente para o proprietário, o grupo e o público geral de cada arquivo.
+
+A proteção baseada em linguagens fornece uma arbitragem refinada de solicitações e privilégios do que o SO é
+capaz de fornecer. Por exemplo, uma única JVM Java pode executar vários threads, cada um em uma classa de proteção
+diferente. Ela impõe as solicitações de recursos por intermédio de uma sofisticada inspeção de pilha e de
+segurança de tipos de linguagem.
 
 
 # SEGURANÇA
 
+Proteção é um problema interno, já segurança deve considerar tanto o sistema de computação 
+quanto o ambiente - pessoas, prédios, empresas, objetos de valor, ameaças - dentro do qual o sistema é usado.
+
+Os dados armazenados no sistema de computação devem ser protegidos contra:
+* Acesso não autorizado
+* Destruição
+* Alteração maliciosa 
+* Intrudução acidental de inconsistências
+
+É mais fácil se proteger contra a perda acidental da consistência dos dados do que se proteger contra o acesso
+malicioso aos dados. 
+
+A proteção absoluta das informações armazenadas em um sistema de computação contra abuso
+malicioso não é possível; mas o custo para infrator pode ser suficiente alto para deter quase todas (quando não
+todas) as tentativas de acesso a essas informações sem autorização apropriada.
+
+Vários tipos de ataques podem ser lançados contra programas e contra computadores individuais ou coletivos:
+* Estouro de pilha ou de buffer: permitem que invasores bem sucedidos alterem seu nível de acesso
+ao sistema
+* Vírus e vermes: são autoperpetuáveis e às vezes infectam milhares de computadores
+* Ataques de recusa de serviço: impedem o uso legítimo de sistemas-alvo
+
+Criptografia: limita o domínio de receptores de dados enquanto 
+
+A criptografia é usada para fornecer sigilo aos dados que estão sendo armazenados ou transferidos. Existem
+dois tipos:
+* Simétrica: requer uma chave compartilhada
+* Assimétrica: fornece uma chave pública e uma chave privada
 
 
-# MáQUINAS VIRTUAIS
+Autenticação: limita o domínio de emissores.
+
+A autenticação, quando combinada com o hashing, pode comprovar que os dados não foram alterados.
+
+Além da proteção-padrão com nome de usuário e senha outros métodos de autentificação são usados para 
+identificar os usuários legítimos de um sistema.
+
+* Senhas descartáveis: mudam de uma sessão para outra para evitar ataques de reexecução
+* A autenticação com dois fatores: requer dois tipos de autenticação, tal como uma calculadora em hardware 
+junto com um PIN de ativação
+* A autenticação com múltiplos fatores: usa três tipos ou mais de autenticação
+
+Os métodos de prevenção ou detecção de incidentes de segurança incluem: 
+* Sistemas de detecção de invasões
+* Softwares antivírus
+* Auditoria e registro em log de eventos dos sitema
+* Monitoramento de alterações em softwares do sistema
+* Mnitoramento de chamadas de sistema e firewalls
+
+# MAQUINAS VIRTUAIS
+
+A virtualização fornece a um convidado uma duplicata do hardware subjacente de um sistema. 
+
+Múltiplos convidados podem ser executados em um sistema, cada um acreditando que é o SO nativo com controle
+total do sistema.
+
+A virtualização tipo 0: é implementada no hardware e requer modificações no SO para garantir operação apropriada. Essas
+modificações oferecem um exemplo de paravirtualização, em que o SO não desconhece a virtualização, mas,
+em vez disso, tem recursos adicionados e algoritmos alterados para melhorar as funções e o desempenho da virtualização.
+
+A virtualização tipo 1: um monitor de máquina virtual (VMM) do hospedeiro fornece o ambiente e os recursos necessários
+à criação, execução e destruição de máquinas virtuais convidadas. Cada convidado inclui todos os softwares tipicamente
+associados a um sistema nativo completo, inclusive o SO, drivers de dispositivo, aplicações, contas de usuários e assim
+por diante.
+
+Os hipervisores tipo 2: são simplesmente aplicações executadas em outros SO, que não sabem que a virtualização está
+ocorrendo. Esses hipervisores não se beneficiam  de suporte de hardware ou do hospedeiro e, assim, devem executar todas
+as atividades de virtualização no contexto de um processo.
+
+A virtualização de ambientes de programação: a linguagem especifíca uma aplicação container em que programas 
+são executados, e essa aplicação fornece serviços aos programas. A emulação é usada quando um sistem hospedeiro tem uma
+arquitetura e o convidado foi compilado para uma arquitetura diferente. Todas as instruções que o convidado quiser
+executar devem ser traduzidas de seu conjunto de instruções para o do hardware nativo. Embora esse método envolva alguma
+queda de desempenho, ele é compensado pela utilidade de poder executar programas antigos em hardware incompátivel mais
+recente ou executar jogos projetados para consoles antigos em hardware moderno.
+
+Os VMMs tiram partido de qualquer suporte de hardware que esteja disponível quando da otimização do scheduling da CPU,
+do gerenciamento de memória e dos módulos de I/O para fornecer aos convidados um uso de recursos ótimo enquanto se
+protegem dos convidados e protegem os convidados uns dos outros.
+
+
 
 
