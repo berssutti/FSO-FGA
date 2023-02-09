@@ -6,6 +6,7 @@
 * [Lista 2](listas/lista2/)
 * [Lista 3](listas/lista3/)
 * [Lista 4](listas/lista4/)
+* [Lista Extra](listas/lista_extra/)
 
 ### Conteúdo
 * [Introduction](conteudo/Introduction.md)
