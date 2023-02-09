@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f3774f91-de5f-4686-b61d-3edac24b23dd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resumos/resumoP2.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resumos/resumoP3.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resumos/resumoP2.md" beforeDir="false" afterPath="$PROJECT_DIR$/resumos/resumoP2.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +30,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/bernardo/Documentos/github/FSO_FGA_UnB",
+    "last_opened_file_path": "/home/bernardo/Documentos/github/teammates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,7 +57,8 @@
       <workItem from="1675202547999" duration="4933000" />
       <workItem from="1675254084737" duration="3828000" />
       <workItem from="1675259016300" duration="1748000" />
-      <workItem from="1675265050574" duration="3247000" />
+      <workItem from="1675265050574" duration="4697000" />
+      <workItem from="1675434171822" duration="670000" />
     </task>
     <servers />
   </component>

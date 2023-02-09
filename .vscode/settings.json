@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "signal.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "dlfcn.h": "c",
+        "types.h": "c",
+        "unistd.h": "c",
+        "time.h": "c"
     }
 }
